@@ -62,7 +62,7 @@ CELERY_BEAT_SCHEDULE = {
 
 # Application definition
 INSTALLED_APPS = [
-    # Jet application
+    'jet_django',
     'jet',
     'django.contrib.admin',
     'django.contrib.auth',
