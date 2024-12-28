@@ -1,16 +1,14 @@
-#!/usr/bin/env bash
-# exit on error
-set -o errexit
+#!/bin/bash
+# Create necessary directories
+mkdir -p static staticfiles media
 
-# Install python dependencies
-pip install --upgrade pip
+# Install Python dependencies
 pip install -r requirements.txt
 
 # Collect static files
-python manage.py collectstatic --no-input
+python manage.py collectstatic --noinput
 
 # Run migrations
-python manage.py migrate
+python manage.py migrate 
 
-# Create superuser (will be skipped if user exists)
-python manage.py createsuperuser --noinput || true 
+chmod +x build.sh 
