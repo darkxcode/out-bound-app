@@ -92,10 +92,13 @@ INSTALLED_APPS = [
 
 # Only add captcha apps if explicitly needed
 if os.getenv('USE_CAPTCHA', 'False') == 'True':
-    INSTALLED_APPS = [
-        'snowpenguin.django.recaptcha2',
-        'multi_captcha_admin',
-    ] + INSTALLED_APPS
+    try:
+        INSTALLED_APPS += [
+            'snowpenguin.django.recaptcha2',
+            'multi_captcha_admin',
+        ]
+    except ImportError:
+        pass  # Skip if packages are not installed
 
 # Captcha configuration
 RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
@@ -204,6 +207,7 @@ FILE_UPLOAD_HANDLERS = ('django_excel.ExcelMemoryFileUploadHandler',
                         'django_excel.TemporaryExcelFileUploadHandler')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_USE_FINDERS = True
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SILENCED_SYSTEM_CHECKS = ['security.W019']
