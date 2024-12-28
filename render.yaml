@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: outbound-app
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mailer.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.8.1
+      - key: DATABASE_URL
+        fromDatabase:
+          name: outbound_app_db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: outbound-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: False
+
+  - type: redis
+    name: outbound-redis
+    ipAllowList: []
+    plan: free
+
+databases:
+  - name: outbound_app_db
+    databaseName: outbound_app
+    user: outbound_app_user
+    plan: free 
