@@ -1,0 +1,36 @@
+{% extends "admin/base_site.html" %}
+{% load staticfiles %}
+{% load static i18n %}
+
+{# Setup favicon #}
+{% block extrahead %}
+  <link rel="shortcut icon" type="image/png" href="{% static 'static/img/revbots.png' %}"/>{% endblock %}
+
+{# Setup browser tab label #}
+{% block title %}{{ title }} |  {% trans "REVBOTS" %}{% endblock %}
+
+{# Setup branding #}
+{% block branding %}
+
+  <style>
+    #branding {
+      display: none;
+      background-color: #2B333D;
+      color: #6A7481;
+      text-align: center;
+      position: relative;
+      height: auto !important;
+      min-height: 52px;
+      min-height: 3.71429rem;
+      box-sizing: border-box;
+      opacity: 0.95;
+      filter: alpha(opacity=95);
+    }
+  </style>
+
+  <h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+      <img src="{% static 'img/revbots.png' %}" alt="REVBOTS" height="100%" width="100%">
+    </a>
+  </h1>
+{% endblock %}
