@@ -62,9 +62,7 @@ CELERY_BEAT_SCHEDULE = {
 
 # Application definition
 INSTALLED_APPS = [
-    # Captcha applications
-    'snowpenguin.django.recaptcha2',
-    'multi_captcha_admin',
+    # Jet application
     'jet',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,16 +76,16 @@ INSTALLED_APPS = [
     'apps.spreadsheets',
 
     # Third-party applications
-    # 'django_celery_beat',
     'ckeditor_uploader',
     'ckeditor',
 ]
 
-
-# Hide captcha on local server
-if DEBUG:
-    CAPTCHA_APPS = ('snowpenguin.django.recaptcha2', 'multi_captcha_admin')
-    INSTALLED_APPS = [app for app in INSTALLED_APPS if app not in CAPTCHA_APPS]
+# Only add captcha apps if explicitly needed
+if os.getenv('USE_CAPTCHA', 'False') == 'True':
+    INSTALLED_APPS = [
+        'snowpenguin.django.recaptcha2',
+        'multi_captcha_admin',
+    ] + INSTALLED_APPS
 
 # Captcha configuration
 RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
