@@ -2,24 +2,17 @@ services:
   - type: web
     name: outbound-app
     env: python
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn mailer.wsgi:application"
+    buildCommand: ./build.sh
+    startCommand: gunicorn mailer.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
-        value: 3.8.1
+        value: 3.9.0
+      - key: REDIS_URL
+        value: redis://red-cto1115umphs73casv40:6379
       - key: DATABASE_URL
         fromDatabase:
-          name: outbound_app_db
+          name: outbound-db
           property: connectionString
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: outbound-redis
-          property: connectionString
-      - key: SECRET_KEY
-        generateValue: true
-      - key: DEBUG
-        value: False
 
   - type: redis
     name: outbound-redis
@@ -27,7 +20,6 @@ services:
     plan: free
 
 databases:
-  - name: outbound_app_db
-    databaseName: outbound_app
-    user: outbound_app_user
-    plan: free 
+  - name: outbound-db
+    databaseName: outbound
+    user: outbound 

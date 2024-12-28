@@ -29,11 +29,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = False  # Should be False in production
 
 # Update ALLOWED_HOSTS to include your Render domain
 ALLOWED_HOSTS = [
     'out-bound-app.onrender.com',  # Add your Render domain
+    '.onrender.com',
     'localhost',
     '127.0.0.1',
     '*',  # Be careful with this in production
@@ -51,9 +52,9 @@ AMAZON_SES_ACCOUNT = {
 # celery -A mailer worker -l info
 # celery -A mailer beat -l info
 
-BROKER_URL = 'redis://localhost:6379/0'
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+BROKER_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+CELERY_BROKER_URL = os.getenv('REDIS_URL', 'redis://localhost:6379')
+CELERY_RESULT_BACKEND = os.getenv('REDIS_URL', 'redis://localhost:6379')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
@@ -72,9 +73,9 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # Redis configuration
-REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
-REDIS_PORT = os.getenv('REDIS_PORT', '6379')
-REDIS_URL = os.getenv('REDIS_URL', f'redis://{REDIS_HOST}:{REDIS_PORT}/0')
+# REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+# REDIS_PORT = os.getenv('REDIS_PORT', '6379')
+# REDIS_URL = os.getenv('REDIS_URL', f'redis://{REDIS_HOST}:{REDIS_PORT}/0')
 
 # Application definition
 INSTALLED_APPS = [
@@ -156,7 +157,7 @@ WSGI_APPLICATION = 'mailer.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL'),
-        conn_max_age=600,
+        conn_max_age=600
     )
 }
 
@@ -224,3 +225,14 @@ CELERY_RESULT_BACKEND = REDIS_URL
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Add this for security
+CSRF_TRUSTED_ORIGINS = ['https://out-bound-app.onrender.com']
+
+# Add Redis cache configuration
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': os.getenv('REDIS_URL', 'redis://localhost:6379/0'),
+    }
+}
