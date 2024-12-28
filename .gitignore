@@ -5,3 +5,4 @@ db.sqlite3
 staticfiles/
 .DS_Store
 venv/
+secret.py
