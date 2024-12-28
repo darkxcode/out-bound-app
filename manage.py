@@ -3,6 +3,10 @@ import os
 import sys
 
 if __name__ == "__main__":
+    # Add the project root to the Python path
+    project_root = os.path.dirname(os.path.abspath(__file__))
+    sys.path.append(project_root)
+    
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailer.settings")
     try:
         from django.core.management import execute_from_command_line

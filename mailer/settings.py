@@ -72,8 +72,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Mailer applications
-    'apps.campaigns',
-    'apps.spreadsheets',
+    'apps.campaigns.apps.CampaignsConfig',
+    'apps.spreadsheets.apps.SpreadsheetsConfig',
 
     # Third-party applications
     'ckeditor_uploader',

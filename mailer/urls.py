@@ -1,12 +1,10 @@
-from django.conf.urls import url, include
 from django.contrib import admin
-
-from apps.campaigns.views import open_message_tracker
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    url(r'^', admin.site.urls),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^contact/(?P<contact_email>\w+|[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/open_message/$',
-        open_message_tracker, name="open_message_tracker"),
-]
+    path('admin/', admin.site.urls),
+    path('jet/', include('jet.urls', 'jet')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

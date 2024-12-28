@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class CampaignsConfig(AppConfig):
-    name = 'campaigns'
+    name = 'apps.campaigns'
+    verbose_name = 'Campaigns'
