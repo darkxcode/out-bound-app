@@ -31,7 +31,13 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+# Update ALLOWED_HOSTS to include your Render domain
+ALLOWED_HOSTS = [
+    'out-bound-app.onrender.com',  # Add your Render domain
+    'localhost',
+    '127.0.0.1',
+    '*',  # Be careful with this in production
+]
 
 # Amazon SES configuration
 AMAZON_SES_ACCOUNT = {
