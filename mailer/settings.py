@@ -219,10 +219,6 @@ FILE_UPLOAD_HANDLERS = ('django_excel.ExcelMemoryFileUploadHandler',
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SILENCED_SYSTEM_CHECKS = ['security.W019']
 
-# Update Celery configuration for Render
-CELERY_BROKER_URL = REDIS_URL
-CELERY_RESULT_BACKEND = REDIS_URL
-
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
