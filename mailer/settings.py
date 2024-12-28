@@ -62,8 +62,8 @@ CELERY_BEAT_SCHEDULE = {
 
 # Application definition
 INSTALLED_APPS = [
-    'jet_django',
-    'jet',
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -190,33 +190,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 FILE_UPLOAD_HANDLERS = ('django_excel.ExcelMemoryFileUploadHandler',
                         'django_excel.TemporaryExcelFileUploadHandler')
 
-
-# Jet admin settings
-JET_SIDE_MENU_COMPACT = True
-
-JET_DEFAULT_THEME = 'light-gray'
-
-JET_SIDE_MENU_ITEMS = [
-
-    {'app_label': 'campaigns',
-     'items': [
-         {'name': 'campaign'},
-         {'name': 'recipient'},
-         {'name': 'mailbox'},
-     ]},
-
-    {'app_label': 'spreadsheets',
-     'items': [
-         {'name': 'spreadsheet'},
-         {'name': 'structure'},
-     ]},
-
-    # if needed
-    {'app_label': 'auth',
-     'items': [
-         {'name': 'group'},
-         {'name': 'user'},
-     ]},
-]
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']
